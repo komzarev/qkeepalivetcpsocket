@@ -8,6 +8,12 @@
  #include <WinSock2.h>
  #include <mstcpip.h>
  #include <ws2ipdef.h>
+#   ifndef TCP_KEEPALIVE //mingw miss this values in ws2ipdef.h
+#       define TCP_KEEPALIVE            3
+#       define TCP_KEEPCNT              16
+#       define TCP_KEEPIDLE             TCP_KEEPALIVE
+#       define TCP_KEEPINTVL            17
+#   endif
 #else
  #include <sys/socket.h>
  #include <netinet/in.h>
