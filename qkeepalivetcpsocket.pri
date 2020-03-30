@@ -10,7 +10,7 @@ HEADERS += $$PWD/keepalivetcpsocket.hpp
 SOURCES += $$PWD/keepalivetcpsocket.cpp
 
 windows {
-    LIBS += -lWs2_32
+    LIBS += -lws2_32
 }
 qnx {
     LIBS += -lsocket
