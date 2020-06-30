@@ -18,27 +18,27 @@ namespace keepalivetcpsocket
 		Gets or sets the number of seconds a TCP connection will remain idle before keepalive probes are sent to the remote.
 		Default value is 1 sec
 		*/
-		void keepidle_sec(int val) { keepidle_sec_ = val; }
+        void keepidle_sec(unsigned int val) { keepidle_sec_ = val; }
 
 		/*
 		Gets or sets the number of TCP keep alive probes that will be sent before the connection is terminated.
 		It is illegal to set TCP_KEEPCNT to a value greater than 255.
 		Default value is 3
 		*/
-		void keepcnt(int val) { keepcnt_ = val; }
+        void keepcnt(unsigned int val) { keepcnt_ = val; }
 
 		/*
 		Gets or sets the number of seconds a TCP connection will wait for a keepalive response before sending another keepalive probe.
 		Default value is 1 sec
 		*/
-		void keepint_sec(int val) { keepint_sec_ = val; }
+        void keepint_sec(unsigned int val) { keepint_sec_ = val; }
 
 	protected:
 		bool isOn_ = false;
-		int keepidle_sec_ = 1;
-		int keepcnt_ = 3;
-		int keepint_sec_ = 1;
-		int setOptions(qintptr descriptor, bool isOn, int keepidle_sec = 1, int keepcnt = 3, int keepint_sec = 1);
+        unsigned int keepidle_sec_ = 1;
+        unsigned int keepcnt_ = 3;
+        unsigned int keepint_sec_ = 1;
+        int setOptions(qintptr descriptor, bool isOn, unsigned int keepidle_sec = 1, unsigned int keepcnt = 3, unsigned int keepint_sec = 1);
 	};
 
 	class AliveTcpServer : public QTcpServer, public KeepAlive
