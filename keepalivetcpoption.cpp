@@ -102,19 +102,27 @@ int keepalivetcpoption::setOptions(std::intptr_t descriptor, bool isOn, std::chr
         mib[3] = TCPCTL_KEEPCNT;
         ival = keepcnt; /* Number of keepalive probe attempts  (default is 8) */
 
+        if(sysctl(mib, 4, NULL, NULL, &ival, sizeof(ival)))
+        {
+            return errno;
+        }
+
         mib[0] = CTL_NET;
         mib[1] = AF_INET;
         mib[2] = IPPROTO_TCP;
         mib[3] = TCPCTL_KEEPINTVL;
         ival = keepint_sec * 2; /* Half seconds between probe attempts; default is 150 (75 sec) */
 
+        if(sysctl(mib, 4, NULL, NULL, &ival, sizeof(ival)))
+        {
+            return errno;
+        }
+
         ::memset(&tval, 0, sizeof(tval));
         tval.tv_sec = keepidle_sec;  /* Seconds of idle time before probing
                               starts (default is 7200) */
 
-        if(    sysctl(mib, 4, NULL, NULL, &ival, sizeof(ival))
-            || sysctl(mib, 4, NULL, NULL, &ival, sizeof(ival))
-            || setsockopt(static_cast<int>(descriptor), IPPROTO_TCP, TCP_KEEPALIVE, (void *) &tval,
+        if(setsockopt(static_cast<int>(descriptor), IPPROTO_TCP, TCP_KEEPALIVE, (void *) &tval,
                           sizeof(tval)))
         {
             return errno;
