@@ -120,9 +120,11 @@ int keepalivetcpoption::setOptions(std::intptr_t descriptor, bool isOn, std::chr
             return errno;
         }
 #else //*nix
+        const int user_timeout_msec = keepidle_sec * 1000 + keepint_sec * 1000 * keepcnt - keepint_sec * 500;
         if (setsockopt(static_cast<int>(descriptor), SOL_TCP, TCP_KEEPIDLE, &keepidle_sec, sizeof(keepidle_sec)) != 0
             || setsockopt(static_cast<int>(descriptor), SOL_TCP, TCP_KEEPCNT, &keepcnt, sizeof(keepcnt)) != 0
-            || setsockopt(static_cast<int>(descriptor), SOL_TCP, TCP_KEEPINTVL, &keepint_sec, sizeof(keepint_sec)) != 0)
+            || setsockopt(static_cast<int>(descriptor), SOL_TCP, TCP_KEEPINTVL, &keepint_sec, sizeof(keepint_sec)) != 0
+            || setsockopt(static_cast<int>(descriptor), SOL_TCP, TCP_USER_TIMEOUT, &user_timeout_msec, sizeof(user_timeout_msec)) != 0)
         {
             return errno;
         }
