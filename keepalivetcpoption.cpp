@@ -50,7 +50,7 @@ int keepalivetcpoption::setKeepAliveOptions(std::intptr_t descriptor, bool isOn,
     }
 
 #ifdef _WIN32
-#if WINVER >= _WIN32_WINNT_WIN10
+#   if WINVER >= _WIN32_WINNT_WIN10
 
     if (setsockopt(static_cast<SOCKET>(descriptor), SOL_SOCKET, SO_KEEPALIVE, reinterpret_cast<char*>(&enableKeepAlive), sizeof(enableKeepAlive)) != 0) {
         return WSAGetLastError();
@@ -66,13 +66,13 @@ int keepalivetcpoption::setKeepAliveOptions(std::intptr_t descriptor, bool isOn,
         }
     }
 
-#else
+#   else
 
-#ifdef _MSC_VER
-#pragma message("WARNING: Keepalive in not fully supported on this version of windows")
-#else
-#warning(Keepalive in not fully supported on this version of windows)
-#endif
+#       ifdef _MSC_VER
+#           pragma message("WARNING: Keepalive in not fully supported on this version of windows")
+#       else
+            #warning(Keepalive in not fully supported on this version of windows)
+#       endif
 
     DWORD dwBytes;
     tcp_keepalive pClSock_tcpKeepalive;
@@ -83,15 +83,16 @@ int keepalivetcpoption::setKeepAliveOptions(std::intptr_t descriptor, bool isOn,
         return WSAGetLastError();
     }
 
-#endif
+#   endif
 
-#else
+#else //unix
+
     if (setsockopt(static_cast<int>(descriptor), SOL_SOCKET, SO_KEEPALIVE, reinterpret_cast<void *>(&enableKeepAlive), sizeof(enableKeepAlive)) != 0) {
         return errno;
     }
 
     if (isOn) {
-#ifdef __QNXNTO__
+#   ifdef __QNXNTO__
         int mib[4];
         int ival;
         struct timeval tval;
@@ -127,7 +128,7 @@ int keepalivetcpoption::setKeepAliveOptions(std::intptr_t descriptor, bool isOn,
         {
             return errno;
         }
-#else //*nix
+#   else //linux
         const int user_timeout_msec = keepidle_sec * 1000 + keepint_sec * 1000 * keepcnt - keepint_sec * 500;
         if (setsockopt(static_cast<int>(descriptor), SOL_TCP, TCP_KEEPIDLE, &keepidle_sec, sizeof(keepidle_sec)) != 0
             || setsockopt(static_cast<int>(descriptor), SOL_TCP, TCP_KEEPCNT, &keepcnt, sizeof(keepcnt)) != 0
@@ -136,7 +137,7 @@ int keepalivetcpoption::setKeepAliveOptions(std::intptr_t descriptor, bool isOn,
         {
             return errno;
         }
-#endif
+#   endif
     }
 #endif
 
