@@ -27,10 +27,10 @@
 #   include <sys/socket.h>
 #   include <netinet/in.h>
 #   include <netinet/tcp.h>
+#   include <errno.h>
 #endif
 
 #ifdef __QNXNTO__
-#   include <errno.h>
 #   include <sys/types.h>
 #   include <sys/param.h>
 #   include <sys/sysctl.h>
