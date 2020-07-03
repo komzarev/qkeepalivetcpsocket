@@ -37,7 +37,7 @@
 #   include <netinet/tcp_var.h>
 #endif
 
-int keepalivetcpoption::setOptions(std::intptr_t descriptor, bool isOn, std::chrono::seconds idleBeforeProbe , unsigned int probesCount , std::chrono::seconds responseTimeout )
+int keepalivetcpoption::setKeepAliveOptions(std::intptr_t descriptor, bool isOn, std::chrono::seconds idleBeforeProbe , unsigned int probesCount , std::chrono::seconds responseTimeout )
 {
     int keepidle_sec = idleBeforeProbe.count();
     int keepcnt = probesCount;

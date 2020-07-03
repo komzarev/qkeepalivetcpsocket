@@ -6,7 +6,11 @@
 
 namespace keepalivetcpoption
 {
-int setOptions(std::intptr_t descriptor, bool isOn, std::chrono::seconds idleBeforeProbe = std::chrono::seconds(1), unsigned int probesCount = 3, std::chrono::seconds responseTimeout = std::chrono::seconds(1));
+constexpr auto idleBeforeProbeDefault   = std::chrono::seconds{1};
+constexpr auto probesCountDefault       = (unsigned int) 3;
+constexpr auto responseTimeoutDefault   = std::chrono::seconds{1};
+
+int setKeepAliveOptions(std::intptr_t descriptor, bool isOn, std::chrono::seconds idleBeforeProbe = idleBeforeProbeDefault, unsigned int probesCount = probesCountDefault, std::chrono::seconds responseTimeout = responseTimeoutDefault);
 }
 
 #endif // KEEPALIVETCPOPTION_HPP
