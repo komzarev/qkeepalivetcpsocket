@@ -39,9 +39,9 @@
 
 int keepalivetcpoption::setKeepAliveOptions(std::intptr_t descriptor, bool isOn, std::chrono::seconds idleBeforeProbe , unsigned int probesCount , std::chrono::seconds responseTimeout )
 {
-    int keepidle_sec = idleBeforeProbe.count();
+    int keepidle_sec = static_cast<int>(idleBeforeProbe.count());
     int keepcnt = probesCount;
-    int keepint_sec = responseTimeout.count();
+    int keepint_sec = static_cast<int>(responseTimeout.count());
 
     int enableKeepAlive = isOn ? 1 : 0;
 
