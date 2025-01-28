@@ -1,29 +1,10 @@
-# README #
+# QKeepAliveTcpSocket
 
-This README would normally document whatever steps are necessary to get your application up and running.
+## Description
+QKeepAliveTcpSocket is a Qt-based header only library that provides TCP sockets with keep-alive options. It allows you to configure keep-alive settings for TCP connections to ensure that idle connections are properly maintained or terminated.
 
-### What is this repository for? ###
+Tested on Windows, Linux, QNX.
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+## Adding to a project
 
-### How do I get set up? ###
-
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+The library files are included in the Qt based projects using *.pri files.
